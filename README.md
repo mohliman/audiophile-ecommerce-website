@@ -1,176 +1,63 @@
-# Frontend Mentor - Audiophile e-commerce website
+# Audiophile
 
-Live demo: [View site](https://audiophile-ui.vercel.app) | [GitHub repository](https://github.com/mohliman/audiophile-ecommerce-website)
+A responsive audio shop demo with product browsing, a persistent cart, and a validated checkout journey.
 
-## Implemented React application
+[Live demo](https://audiophile-ui.vercel.app) · [Original challenge brief](docs/challenge-brief.md)
 
-This repository now contains a complete local Audiophile demo built with React, TypeScript, Vite, React Router, and CSS Modules. All original starter HTML, product data, assets, attribution, and design-file exclusions remain in place. The original challenge instructions follow this implementation guide.
+![Audiophile homepage featuring the XX99 Mark II headphones and category navigation](.github/images/preview.webp)
 
-### Run locally
+## Built with
 
-Requires Node.js 22.12 or newer and npm. No environment variables or external accounts are required.
+React 19 · TypeScript · Vite · React Router · CSS Modules · Vitest · Playwright
+
+## Features
+
+- Three product categories, six product pages, responsive galleries, and recommendations.
+- Cart additions, quantity updates, individual removal, empty states, and cross-tab persistence.
+- Billing and shipping validation, with cash-on-delivery and demo e-Money form modes.
+- Shipping, VAT, and grand-total calculations; confirmation dialog with expandable order summary.
+- Keyboard-accessible dialogs, labelled errors, focus management, announcements, and responsive layouts.
+
+## Implementation notes
+
+`src/CartContext.tsx` owns cart state, `src/shop.ts` contains product and calculation helpers, and `src/Checkout.tsx` implements checkout validation and confirmation. `src/pages.tsx` provides the homepage, category listings, and product pages.
+
+The cart persists under `audiophile-cart-v1` in `localStorage`. Malformed stored data is sanitized, and unavailable storage uses an in-memory fallback. Only product identifiers and quantities are saved; checkout personal and payment fields are not persisted.
+
+Shipping is $50 for a nonempty cart. VAT is 20% of the product subtotal and is displayed as included; the grand total is the subtotal plus shipping. Quantities are capped at 99, and setting a quantity to zero removes the item.
+
+## Run locally
+
+Use Node.js 24 and npm. No application environment variables or external accounts are required.
 
 ```sh
 npm ci
 npm run dev -- --port 5317 --strictPort
 ```
 
-Open **http://127.0.0.1:5317/**. The port is explicit because other local projects may already use Vite's default port.
+Open `http://127.0.0.1:5317`.
 
 ```sh
 npm run build
 npm run preview -- --port 5318
 ```
 
-The production build runs TypeScript checks and writes the static application to `dist/`. A static host would need an SPA fallback to `index.html` for direct route visits. The GitHub repository is connected to Vercel; `vercel.json` provides the route fallback and pushes to `main` deploy automatically.
+Vercel deploys pushes to `main`. `vercel.json` sets the `dist/` output and route fallback for direct page visits.
 
-### Features and implementation decisions
-
-- Responsive homepage, three category listings, six product detail pages, product galleries, recommendations, and a not-found page.
-- Cart additions, quantity editing, individual removal, remove-all, and empty states. Quantity zero removes an item; quantities are capped at 99 per product.
-- Cart persistence in `localStorage` under `audiophile-cart-v1`, including cross-tab updates, recovery from malformed stored data, and an in-memory fallback when browser storage is unavailable. Only product IDs and quantities are saved; checkout personal and payment fields are never persisted.
-- Billing and shipping validation, email and phone validation, international postal codes, 9-digit e-Money numbers, and 4-digit PINs. Cash on delivery hides and skips e-Money fields.
-- Totals use the supplied product prices and quantities. Shipping is $50 for nonempty orders. VAT is 20% of the product subtotal, excluding shipping, and is displayed as **included**. Grand total is product subtotal + shipping. For the starter's $5,396 basket, VAT is $1,079.20 and grand total is $5,446.
-- An order confirmation dialog shows a captured cart summary, an expandable item list, and the grand total. Returning home or dismissing the confirmation clears the completed demo cart.
-- Labelled controls and validation errors, error focus, live cart-add feedback, visible focus indicators, a skip link, native modal dialogs, background scroll locking, keyboard focus wrapping, Escape dismissal, and focus restoration.
-- Supplied responsive images and SVG icons are reused directly. Manrope is bundled locally through `@fontsource/manrope`; no runtime font service is needed.
-
-### Verification
+## Verification
 
 ```sh
 npm test
-npm run test:e2e
 npm run build
-npm audit
+npm run test:e2e
 ```
 
-Vitest covers cart sanitization, quantity transitions, subtotal/shipping/VAT calculations, and checkout validation. Playwright uses installed Google Chrome and tests desktop (1440px), tablet (768px), mobile (375px), and narrow mobile (320px) layouts. It exercises every product route, assets and overflow, navigation, cart persistence and editing, checkout errors, both payment options, confirmation summaries, and dialog keyboard behaviour. Browser screenshots are written to `test-results/` for visual review. If Chrome is unavailable, install it or change the Playwright `channel` to an installed browser.
+The deployment verification on 12 October 2026 passed TypeScript, the production build, and all 9 unit tests. Vitest covers cart transitions, sanitized persistence, totals, and checkout validation. Existing Playwright tests cover product routes, cart editing, persistence, form errors, payment modes, confirmation, keyboard behavior, missing images, and overflow at desktop, tablet, and mobile widths.
 
-Verified on 11 October 2026: all 9 unit tests and all 16 browser tests passed; TypeScript and the production build passed; `npm audit` reported zero vulnerabilities. Desktop, tablet, mobile, and narrow-screen screenshots were visually reviewed. The browser route checks found no missing images, horizontal page overflow, or console/runtime errors. Cross-browser and assistive-technology testing have not been performed.
+Playwright uses installed Google Chrome via `channel: "chrome"`; install Chrome or adjust that setting for your environment. Cross-browser and assistive-technology testing have not been performed.
 
-### Limits and attribution
+## Demo scope and attribution
 
-Checkout is explicitly labelled as a demo: **no real payment is processed, order is submitted, or email is sent**. The challenge requires no backend. Do not enter real payment details.
+Checkout is a demonstration: **no payment is processed, order is submitted, or email is sent**. Use invented details when trying the form. There is no backend.
 
-Only `preview.jpg` is supplied as a visual design reference. It is a homepage montage rather than a full set of screen designs; no Figma/Sketch file or separate style guide is present. Homepage proportions and imagery follow that reference. Product, checkout, and mobile layouts use the supplied responsive assets and the same visual language, but exact matching against absent reference screens cannot be verified.
-
-The challenge and supplied product imagery/icons belong to [Frontend Mentor](https://www.frontendmentor.io) and retain their original terms. Premium design files must not be shared publicly. The supplied `.gitignore` files have been preserved. Manrope is distributed under the SIL Open Font License; its package includes the license.
-
----
-
-## Original challenge instructions
-
-![Design preview for the Audiophile e-commerce website coding challenge](./preview.jpg)
-
-## Welcome! 👋
-
-Thanks for purchasing this premium Frontend Mentor coding challenge.
-
-[Frontend Mentor](https://www.frontendmentor.io) challenges help you improve your coding skills by building realistic projects. These premium challenges are perfect portfolio pieces, so please feel free to use what you create in your portfolio to show others.
-
-**To do this challenge, you need a strong understanding of HTML, CSS, and JavaScript.**
-
-## The challenge
-
-Your challenge is to build out this multi-page e-commerce website and get it looking as close to the design as possible.
-
-You can use any tools you like to help you complete the challenge. So if you've got something you'd like to practice, feel free to give it a go.
-
-If you choose to use a JS-heavy approach, we provide a local `data.json` file for the products. If you want to take it up a notch, feel free to build this as a full-stack application or use a headless CMS!
-
-Your users should be able to:
-
-- View the optimal layout for the app depending on their device's screen size
-- See hover states for all interactive elements on the page
-- Add/Remove products from the cart
-- Edit product quantities in the cart
-- Fill in all fields in the checkout
-- Receive form validations if fields are missed or incorrect during checkout
-- See correct checkout totals depending on the products in the cart
-  - Shipping always adds $50 to the order
-  - VAT is calculated as 20% of the product total, excluding shipping
-- See an order confirmation modal after checking out with an order summary
-- **Bonus**: Keep track of what's in the cart, even after refreshing the browser (`localStorage` could be used for this if you're not building out a full-stack app)
-
-### Want some support on the challenge?
-
-[Join our community](https://www.frontendmentor.io/community) and ask questions in the **#help** channel.
-
-## Where to find everything
-
-Your task is to build out the project to the design file provided. You can download the design file on the platform. **Please be sure not to share it with anyone else.** The design download comes with a `README.md` file as well to help you get set up.
-
-All the required assets for this project are in the `/assets` folder. The assets are already exported for the correct screen size and optimized. Some images are reusable at multiple screen sizes. So if you don't see an image in a specific folder, it will typically be in another folder for that page.
-
-The design system in the design file will give you more information about the various colors, fonts, and styles used in this project.
-
-We've prepared the challenge to let you choose your approach. We have separate `.html` files for all pages and products that include the content. However, if you prefer to practice a more JS-heavy approach, you could choose to use the local `data.json` and a library/framework like React, Vue, Angular, etc.
-
-Feel free to edit the JSON structure however you like. If you want to practice working with a professional image hosting service, you could upload the images to a free [Cloudinary](https://cloudinary.com/) account and use their URLs instead of relative paths.
-
-## Using AI coding assistants
-
-We've included two files to help you if you're using AI coding assistants (like Claude, GitHub Copilot, Cursor, etc.) while working on this challenge:
-
-- `AGENTS.md` - Contains detailed instructions for AI assistants on how to help you with this challenge. It's tailored to this challenge's difficulty level, so the AI will provide guidance appropriate to your learning stage—offering more support for beginner challenges and encouraging more independence on advanced ones.
-- `CLAUDE.md` - A pointer file that directs Claude-based tools to the AGENTS.md instructions.
-
-**How to use them:** You don't need to do anything! These files are automatically detected by most AI coding tools. The AI will read them and adjust its behavior to be a better learning partner—guiding you toward solutions rather than just giving you the answers.
-
-**Note:** These files are designed to help you *learn*, not to do the work for you. The AI is instructed to ask questions, give hints, and explain concepts rather than writing complete solutions.
-
-## Building your project
-
-Feel free to use any workflow that you feel comfortable with. Below is a suggested process, but do not feel like you need to follow these steps:
-
-1. Separate the `starter-code` from the rest of this project and rename it to something meaningful for you. Initialize the codebase as a public repository on [GitHub](https://github.com/). Creating a repo will make it easier to share your code with the community if you need help. If you're not sure how to do this, [have a read-through of this Try Git resource](https://try.github.io/). **⚠️ IMPORTANT ⚠️: There are already a couple of `.gitignore` files in this project. Please do not remove them or change the content of the files. If you create a brand new project, please use the `.gitignore` files provided in your new codebase. This is to avoid the accidental upload of the Figma design file to GitHub. With these premium challenges, please be sure not to share the design file in your GitHub repo. Thanks!**
-2. Configure your repository to publish your code to a web address. This will also be useful if you need some help during a challenge as you can share the URL for your project with your repo URL. There are a number of ways to do this, and we provide some recommendations below.
-3. Look through the designs to start planning out how you'll tackle the project. This step is crucial to help you think ahead for CSS classes to create reusable styles.
-4. Before adding any styles, structure your content with HTML. Writing your HTML first can help focus your attention on creating well-structured content.
-5. Write out the base styles for your project, including general content styles, such as `font-family` and `font-size`.
-6. Start adding styles to the top of the page and work down. Only move on to the next section once you're happy you've completed the area you're working on.
-
-## Deploying your project
-
-As mentioned above, there are many ways to host your project for free. Our recommended hosts are:
-
-- [GitHub Pages](https://pages.github.com/)
-- [Vercel](https://vercel.com/)
-- [Netlify](https://www.netlify.com/)
-
-You can host your site using one of these solutions or any of our other trusted providers. [Read more about our recommended and trusted hosts](https://www.frontendmentor.io/guides/hosting-your-solution).
-
-## Create a custom `README.md`
-
-We strongly recommend overwriting this `README.md` with a custom one. We've provided a template inside the [`README-template.md`](./README-template.md) file in this starter code.
-
-The template provides a guide for what to add. A custom `README` will help you explain your project and reflect on your learnings. Please feel free to edit our template as much as you like.
-
-Once you've added your information to the template, delete this file and rename the `README-template.md` file to `README.md`. That will make it show up as your repository's README file.
-
-## Submitting your solution
-
-Submit your solution on the platform for the rest of the community to see. Follow our ["Complete guide to submitting solutions"](https://www.frontendmentor.io/guides/how-to-submit-solutions) for tips on how to do this.
-
-Remember, if you're looking for feedback on your solution, be sure to ask questions when submitting it. The more specific and detailed you are with your questions, the higher the chance you'll get valuable feedback from the community.
-
-**⚠️ IMPORTANT ⚠️: With these premium challenges, please be sure not to upload the design file to GitHub when you're submitting to the platform and sharing it around. If you've created a brand new project, the easiest way to do that is to copy across the `.gitignore` provided in this starter project.**
-
-## Sharing your solution
-
-There are multiple places you can share your solution:
-
-1. Share your solution page in the **#finished-projects** channel of the [community](https://www.frontendmentor.io/community).
-2. Share on [X (formerly Twitter)](https://x.com/frontendmentor) and mention **@frontendmentor**, including the repo and live URLs in your post. We'd love to take a look at what you've built and help share it around.
-3. Share your solution on [LinkedIn](https://www.linkedin.com/company/frontend-mentor/).
-4. Blog about your experience building your project. Writing about your workflow, technical choices, and talking through your code is a brilliant way to reinforce what you've learned. Great platforms to write on are [dev.to](https://dev.to/), [Hashnode](https://hashnode.com/), and [CodeNewbie](https://community.codenewbie.org/).
-
-We provide templates to help you share your solution once you've submitted it on the platform. Please do edit them and include specific questions when you're looking for feedback.
-
-The more specific you are with your questions the more likely it is that another member of the community will give you feedback.
-
-## Got feedback for us?
-
-We love receiving feedback! We're always looking to improve our challenges and our platform. So if you have anything you'd like to mention, please email hi[at]frontendmentor[dot]io.
-
-**Have fun building!** 🚀
+Challenge, design, product images, and icons: [Frontend Mentor](https://www.frontendmentor.io). Manrope is bundled through Fontsource under the SIL Open Font License. Premium design-file exclusions are retained. The screenshot shows the implemented app; `preview.jpg` retains the supplied reference. Full screen designs were not supplied, so exact matching against those absent designs cannot be verified.
