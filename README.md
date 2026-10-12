@@ -1,6 +1,6 @@
 # Frontend Mentor - Audiophile e-commerce website
 
-Live demo: [View site](https://audiophile-ecommerce-website-eight-eta.vercel.app) | [GitHub repository](https://github.com/mohliman/audiophile-ecommerce-website)
+Live demo: [View site](https://audiophile-ui.vercel.app) | [GitHub repository](https://github.com/mohliman/audiophile-ecommerce-website)
 
 ## Implemented React application
 
