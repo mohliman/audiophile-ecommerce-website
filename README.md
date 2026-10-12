@@ -1,5 +1,7 @@
 # Frontend Mentor - Audiophile e-commerce website
 
+Live demo: [View site](https://audiophile-ecommerce-website-eight-eta.vercel.app) | [GitHub repository](https://github.com/mohliman/audiophile-ecommerce-website)
+
 ## Implemented React application
 
 This repository now contains a complete local Audiophile demo built with React, TypeScript, Vite, React Router, and CSS Modules. All original starter HTML, product data, assets, attribution, and design-file exclusions remain in place. The original challenge instructions follow this implementation guide.
@@ -20,7 +22,7 @@ npm run build
 npm run preview -- --port 5318
 ```
 
-The production build runs TypeScript checks and writes the static application to `dist/`. A static host would need an SPA fallback to `index.html` for direct route visits. This project has not been deployed or pushed to a remote repository.
+The production build runs TypeScript checks and writes the static application to `dist/`. A static host would need an SPA fallback to `index.html` for direct route visits. The GitHub repository is connected to Vercel; `vercel.json` provides the route fallback and pushes to `main` deploy automatically.
 
 ### Features and implementation decisions
 
